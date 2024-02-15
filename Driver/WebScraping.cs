@@ -14,7 +14,9 @@ namespace WebScraping4devs.Driver
         {
             if (driver == null)
             {
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.AddArgument("--headless");
+                driver = new ChromeDriver(options);
             }
         }
 
