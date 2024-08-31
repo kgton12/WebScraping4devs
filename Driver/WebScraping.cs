@@ -40,7 +40,7 @@ namespace WebScraping4devs.Driver
                 cpfs.Add(cpf);
             }
 
-            SaveToCsvCPF(cpfs, dir);
+            SaveToCsv(cpfs, dir);
 
             return "";
         }
@@ -91,11 +91,11 @@ namespace WebScraping4devs.Driver
                 creditCards.Add(creditCard);
             }           
 
-            SaveToCsvCreditCard(creditCards, dir);
+            SaveToCsv(creditCards, dir);
 
             return "";
         }
-        public void SaveToCsvCPF(List<Cpf> obj, string filePath)
+        public void SaveToCsv<T>(IEnumerable<T> obj, string filePath)
         {
             if(File.Exists(filePath))
             {
@@ -105,7 +105,7 @@ namespace WebScraping4devs.Driver
             using (var writer = new StreamWriter(filePath))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.WriteHeader<Cpf>();
+                csv.WriteHeader<T>();
                 csv.NextRecord();
 
                 foreach (var item in obj)
@@ -113,26 +113,6 @@ namespace WebScraping4devs.Driver
                     csv.WriteRecord(item);
                     csv.NextRecord();
                 }
-            }
-        }
-        public void SaveToCsvCreditCard(List<CreditCard> obj, string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            using (var writer = new StreamWriter(filePath))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.WriteHeader<CreditCard>();
-                csv.NextRecord();
-
-                foreach (var item in obj)
-                {
-                    csv.WriteRecord(item);
-                    csv.NextRecord();
-                }                
             }
         }
         public void CloseDriver()
